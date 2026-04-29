@@ -1,5 +1,8 @@
 extends layout
 
+block title
+  | Products
+
 block content
   h1 Our Homework Services
   
@@ -7,6 +10,8 @@ block content
     each product in products
       .product-card
         h3= product.name
+        p Category: #{product.category}
         p Type: #{product.type}
-        p Duration: #{product.duration} minutes
+        p University: #{product.university}
+        p Price: $#{product.price}
         a(href=`/products/${product.name}`) View Details →

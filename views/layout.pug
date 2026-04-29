@@ -1,21 +1,28 @@
 doctype html
 html
   head
-    title Homework Helper
-    link(rel="stylesheet", href="/styles.css")
+    meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
+    title
+      block title
+        | Homework Helper
+    link(rel="stylesheet", href="/styles.css")
   body
     nav
       .nav-container
         a.logo(href="/") Homework Helper
         ul.nav-links
-          li: a(href="/") Home
-          li: a(href="/products") Products
-          li: a(href="/cart") Cart
-          li: a(href="/login") Login
-    
+          li
+            a(href="/") Home
+          li
+            a(href="/products") Products
+          li
+            a(href="/cart") Cart
+          li
+            a(href="/login") Login
+
     .container
-      block content  // This is required for products.pug to extend
-    
+      block content
+
     footer
-      p © 2026 Homework Helper - Your Group Name
+      p © 2026 CSC317 Final Project
