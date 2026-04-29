@@ -1,0 +1,9 @@
+cat > views/404.pug << 'EOF'
+extends layout
+
+block content
+  h1 404 - Product Not Found
+  
+  p Sorry, we couldn't find a product called "#{identifier}".
+  a(href="/products") Browse all products →
+EOF

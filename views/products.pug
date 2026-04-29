@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Our Homework Services
+  
+  .products-grid
+    each product in products
+      .product-card
+        h3= product.name
+        p Type: #{product.type}
+        p Duration: #{product.duration} minutes
+        a(href=`/products/${product.name}`) View Details →

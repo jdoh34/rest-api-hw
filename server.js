@@ -1,7 +1,12 @@
 'use strict';
 const express = require('express');
+const path = require('path');
 const app = express();
 app.use(express.json());
+// Pug view engine setup
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,8 +27,14 @@ function findIndexByTitle(title) {
 }
 
 app.get('/', (req, res) => {
-  res.status(200).json(homework);
+  const homework = [
+    { name: 'math', type: 'worksheet', duration: 30 },
+    { name: 'history', type: 'essay', duration: 120 },
+    { name: 'science', type: 'lab-report', duration: 60 }
+  ];
+  res.status(200).render('products', { products: homework });
 });
+
 
 app.head('/', (req, res) => {
   res.set('X-Homework-Count', String(homework.length));
@@ -96,6 +107,53 @@ app.delete('/:title', (req, res) => {
     
     homework.splice(index, 1);
     res.status(204).send();
+});
+
+// ========== VIEW ROUTES ==========
+
+app.get('/home', (req, res) => {
+    res.render('home', { title: 'Home' });
+});
+
+app.get('/products', (req, res) => {
+    res.render('products', { 
+        title: 'All Products',
+        products: homework 
+    });
+});
+
+app.get('/products/:identifier', (req, res) => {
+    const identifier = req.params.identifier;
+    const normalizedIdentifier = normalizeTitle(identifier);
+    const product = homework.find(item => normalizeTitle(item.name) === normalizedIdentifier);
+    
+    if (!product) {
+        return res.render('404', { 
+            title: 'Not Found',
+            identifier: identifier 
+        });
+    }
+    
+    res.render('product-detail', { 
+        title: product.name,
+        product: product 
+    });
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', { title: 'Login' });
+});
+
+app.post('/login', (req, res) => {
+    res.redirect('/home');
+});
+
+app.get('/profile', (req, res) => {
+    res.render('profile', { title: 'My Profile' });
+});
+
+app.get('/cart', (req, res) => {
+    res.render('cart', { title: 'Shopping Cart' });
 });
 
 app.listen(PORT, () => {

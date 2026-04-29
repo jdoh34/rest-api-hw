@@ -1,0 +1,19 @@
+cat > views/product-detail.pug << 'EOF'
+extends layout
+
+block content
+  h1= product.name
+  
+  .product-detail
+    p 
+      strong Type: 
+      span= product.type
+    p 
+      strong Duration: 
+      span= product.duration minutes
+    p 
+      strong Price: 
+      span $#{product.duration * 2}.99
+    
+    a.button(href="/products") ← Back to Products
+EOF
