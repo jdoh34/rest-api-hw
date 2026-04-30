@@ -16,4 +16,5 @@ A simple REST API built with Express.js to manage a small in-memory homework lis
 - Node.js
 - Express.js
 - Nodemon
+- html
 
