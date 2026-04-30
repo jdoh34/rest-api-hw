@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;500;600;700&display=swap");
 /* Global Styles */
 * {
   margin: 0;
@@ -6,7 +7,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
   line-height: 1.6;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
@@ -252,3 +253,76 @@ footer p {
 .product-card:nth-child(1) { animation-delay: 0.1s; }
 .product-card:nth-child(2) { animation-delay: 0.2s; }
 .product-card:nth-child(3) { animation-delay: 0.3s; }
+/* Logo Styling */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 45px;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+}
+
+/* Logo Styling */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 45px;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+}
