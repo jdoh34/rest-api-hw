@@ -158,6 +158,13 @@ app.post('/login', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/signup', (req, res) => {
+  res.render('signup', { title: 'Sign Up' });
+});
+
+app.post('/signup', (req, res) => {
+  res.redirect('/products?discount=applied');
+});
 app.get('/profile', (req, res) => {
   res.render('profile', { title: 'My Profile' });
 });

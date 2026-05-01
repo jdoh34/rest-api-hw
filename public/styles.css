@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+  font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
   line-height: 1.6;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
@@ -325,4 +325,141 @@ footer p {
   .logo-text {
     font-size: 1rem;
   }
+}
+
+/* Larger Logo and Brand Text */
+.logo {
+  width: 100px !important;
+  height: auto;
+}
+
+.logo-text {
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+}
+
+.logo-container {
+  gap: 1.2rem !important;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 70px !important;
+  }
+  .logo-text {
+    font-size: 1.2rem !important;
+  }
+}
+
+/* Book-shaped Product Cards */
+.product-card {
+  background: #fef9e6;
+  border-radius: 8px 20px 20px 8px;
+  border-left: 12px solid #667eea;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 12px 12px 0 rgba(0,0,0,0.15);
+}
+
+/* Book spine effect */
+.product-card::after {
+  content: "📖";
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+
+/* Book page lines effect */
+.product-card h3 {
+  border-bottom: 2px dotted #ddd;
+  padding-bottom: 8px;
+}
+
+/* Discount Banner */
+.discount-banner {
+  background: linear-gradient(135deg, #ffd89b, #19547b);
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.discount-banner a {
+  color: #ffd700;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.discount-banner a:hover {
+  text-decoration: underline;
+}
+
+.discount-banner span {
+  background: #ffd700;
+  color: #1a1a2e;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+/* Sign Up Button */
+.signup-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  border-radius: 25px !important;
+  padding: 6px 16px !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.signup-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Signup Form */
+.signup-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.signup-form input, .signup-form select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.signup-form button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.signup-form button:hover {
+  transform: scale(1.02);
+}
+
+.already {
+  text-align: center;
+  margin-top: 1rem;
 }
