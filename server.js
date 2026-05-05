@@ -4,6 +4,71 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database("homework.db", (err) => {
+  if (err) {
+    return console.error("Error opening database:", err.message);
+  }
+  console.log("Connected to the homework database.");
+});
+
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL UNIQUE,
+      year TEXT,
+      password TEXT NOT NULL
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL UNIQUE,
+      category TEXT NOT NULL,
+      type TEXT NOT NULL,
+      university TEXT NOT NULL,
+      courseLevel TEXT NOT NULL,
+      format TEXT NOT NULL,
+      professorStyle TEXT NOT NULL,
+      price REAL NOT NULL
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS cart_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER NOT NULL DEFAULT 1,
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (product_id) REFERENCES products(id)
+    )
+  `);
+
+  // Seed initial products (only inserts if not already there)
+  const insertProduct = `
+    INSERT OR IGNORE INTO products
+    (name, category, type, university, courseLevel, format, professorStyle, price)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const products = [
+    ['Critical Reading Response', 'humanities', 'reading-response', 'San Francisco State University', 'lower-division', 'essay', 'analysis-heavy', 15],
+    ['Research Summary', 'social-sciences', 'summary-paper', 'San Francisco State University', 'upper-division', 'written-report', 'source-based', 20],
+    ['Lab Write-Up', 'natural-sciences', 'lab-report', 'San Francisco State University', 'lower-division', 'report', 'structured', 25],
+    ['Problem Set', 'mathematics', 'worksheet', 'San Francisco State University', 'lower-division', 'problem-solving', 'show-your-work', 18],
+    ['Case Study Reflection', 'business', 'reflection', 'San Francisco State University', 'upper-division', 'short-essay', 'application-based', 22],
+    ['Design Draft', 'creative-arts', 'project-draft', 'San Francisco State University', 'upper-division', 'portfolio-piece', 'project-based', 30]
+  ];
+
+  products.forEach(product => {
+    db.run(insertProduct, product);
+  });
+});
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,107 +80,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
 
-// In-memory state
-const homework = [
-  {
-    name: 'Critical Reading Response',
-    category: 'humanities',
-    type: 'reading-response',
-    university: 'San Francisco State University',
-    courseLevel: 'lower-division',
-    format: 'essay',
-    professorStyle: 'analysis-heavy',
-    price: 15
-  },
-  {
-    name: 'Research Summary',
-    category: 'social-sciences',
-    type: 'summary-paper',
-    university: 'San Francisco State University',
-    courseLevel: 'upper-division',
-    format: 'written-report',
-    professorStyle: 'source-based',
-    price: 20
-  },
-  {
-    name: 'Lab Write-Up',
-    category: 'natural-sciences',
-    type: 'lab-report',
-    university: 'San Francisco State University',
-    courseLevel: 'lower-division',
-    format: 'report',
-    professorStyle: 'structured',
-    price: 25
-  },
-  {
-    name: 'Problem Set',
-    category: 'mathematics',
-    type: 'worksheet',
-    university: 'San Francisco State University',
-    courseLevel: 'lower-division',
-    format: 'problem-solving',
-    professorStyle: 'show-your-work',
-    price: 18
-  },
-  {
-    name: 'Case Study Reflection',
-    category: 'business',
-    type: 'reflection',
-    university: 'San Francisco State University',
-    courseLevel: 'upper-division',
-    format: 'short-essay',
-    professorStyle: 'application-based',
-    price: 22
-  },
-  {
-    name: 'Design Draft',
-    category: 'creative-arts',
-    type: 'project-draft',
-    university: 'San Francisco State University',
-    courseLevel: 'upper-division',
-    format: 'portfolio-piece',
-    professorStyle: 'project-based',
-    price: 30
-  }
-];
-
-function normalizeTitle(title) {
-  return String(title || '').toLowerCase().trim();
-}
-
-function findIndexByTitle(title) {
-  const normalized = normalizeTitle(title);
-  return homework.findIndex(h => normalizeTitle(h.name) === normalized);
-}
-
-function isValidHomework(item) {
-  return (
-    item.name &&
-    typeof item.name === 'string' &&
-    item.name.trim() !== '' &&
-    item.category &&
-    typeof item.category === 'string' &&
-    item.category.trim() !== '' &&
-    item.type &&
-    typeof item.type === 'string' &&
-    item.type.trim() !== '' &&
-    item.university &&
-    item.university === 'San Francisco State University' &&
-    item.courseLevel &&
-    typeof item.courseLevel === 'string' &&
-    item.courseLevel.trim() !== '' &&
-    item.format &&
-    typeof item.format === 'string' &&
-    item.format.trim() !== '' &&
-    item.professorStyle &&
-    typeof item.professorStyle === 'string' &&
-    item.professorStyle.trim() !== '' &&
-    item.price !== undefined &&
-    typeof item.price === 'number' &&
-    item.price > 0
-  );
-}
-
 // ========== VIEW ROUTES ==========
 
 app.get('/', (req, res) => {
@@ -123,31 +87,42 @@ app.get('/', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-  res.render('products', {
-    title: 'All Products',
-    products: homework
+  db.all('SELECT * FROM products', [], (err, products) => {
+    if (err) {
+      return res.status(500).send('Database error');
+    }
+
+    res.render('products', {
+      title: 'All Products',
+      products: products
+    });
   });
 });
 
 app.get('/products/:identifier', (req, res) => {
   const identifier = req.params.identifier;
-  const normalizedIdentifier = normalizeTitle(identifier);
 
-  const product = homework.find(
-    item => normalizeTitle(item.name) === normalizedIdentifier
+  db.get(
+    'SELECT * FROM products WHERE LOWER(name) = LOWER(?)',
+    [identifier],
+    (err, product) => {
+      if (err) {
+        return res.status(500).send('Database error');
+      }
+
+      if (!product) {
+        return res.status(404).render('404', {
+          title: 'Not Found',
+          identifier: identifier
+        });
+      }
+
+      res.render('product-detail', {
+        title: product.name,
+        product: product
+      });
+    }
   );
-
-  if (!product) {
-    return res.status(404).render('404', {
-      title: 'Not Found',
-      identifier: identifier
-    });
-  }
-
-  res.render('product-detail', {
-    title: product.name,
-    product: product
-  });
 });
 
 app.get('/login', (req, res) => {
@@ -163,41 +138,111 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  res.redirect('/products?discount=applied');
+  const { name, email, year, password } = req.body;
+
+  db.run(
+    'INSERT INTO users (name, email, year, password) VALUES (?, ?, ?, ?)',
+    [name, email, year, password],
+    function (err) {
+      if (err) {
+        return res.status(400).send('Could not create user. Email may already exist.');
+      }
+
+      res.redirect('/products?discount=applied');
+    }
+  );
 });
+
 app.get('/profile', (req, res) => {
   res.render('profile', { title: 'My Profile' });
 });
 
 app.get('/cart', (req, res) => {
-  res.render('cart', { title: 'Shopping Cart' });
+  const query = `
+    SELECT 
+      cart_items.id,
+      products.name,
+      products.type,
+      products.price,
+      cart_items.quantity,
+      products.price * cart_items.quantity AS subtotal
+    FROM cart_items
+    JOIN products ON cart_items.product_id = products.id
+  `;
+
+  db.all(query, [], (err, cartItems) => {
+    if (err) {
+      return res.status(500).send('Database error');
+    }
+
+    const total = cartItems.reduce((sum, item) => {
+      return sum + item.subtotal;
+    }, 0);
+
+    res.render('cart', {
+      title: 'Shopping Cart',
+      cartItems: cartItems,
+      total: total
+    });
+  });
 });
 
-app.get('/home', (req, res) => {
-  res.render('home', { title: 'Home' });
+app.post('/cart/add/:productId', (req, res) => {
+  const productId = req.params.productId;
+
+  db.run(
+    'INSERT INTO cart_items (product_id, quantity) VALUES (?, ?)',
+    [productId, 1],
+    function (err) {
+      if (err) {
+        return res.status(500).send('Could not add item to cart');
+      }
+
+      res.redirect('/cart');
+    }
+  );
 });
 
 // ========== API ROUTES ==========
 
 app.head('/', (req, res) => {
-  res.set('X-Homework-Count', String(homework.length));
-  res.sendStatus(200);
+  db.get('SELECT COUNT(*) as count FROM products', [], (err, row) => {
+    if (err) {
+      return res.sendStatus(500);
+    }
+
+    res.set('X-Homework-Count', String(row.count));
+    res.sendStatus(200);
+  });
 });
 
 app.get('/api/homework', (req, res) => {
-  res.status(200).json(homework);
+  db.all('SELECT * FROM products', [], (err, products) => {
+    if (err) {
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    res.status(200).json(products);
+  });
 });
 
 app.get('/api/homework/:title', (req, res) => {
-  const idx = findIndexByTitle(req.params.title);
+  db.get(
+    'SELECT * FROM products WHERE LOWER(name) = LOWER(?)',
+    [req.params.title],
+    (err, product) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
 
-  if (idx === -1) {
-    return res.status(404).json({ error: 'not found' });
-  }
+      if (!product) {
+        return res.status(404).json({ error: 'not found' });
+      }
 
-  res.status(200).json(homework[idx]);
+      res.status(200).json(product);
+    }
+  );
 });
-
 app.post('/add', (req, res) => {
   const newHomework = req.body;
 
@@ -226,37 +271,72 @@ app.post('/add', (req, res) => {
     price: Number(newHomework.price)
   };
 
-  if (!isValidHomework(homeworkToAdd)) {
+  if (
+    !homeworkToAdd.name ||
+    !homeworkToAdd.category ||
+    !homeworkToAdd.type ||
+    !homeworkToAdd.courseLevel ||
+    !homeworkToAdd.format ||
+    !homeworkToAdd.professorStyle ||
+    !homeworkToAdd.price ||
+    homeworkToAdd.price <= 0
+  ) {
     return res.status(400).json({
-      error: 'Invalid data. university must be San Francisco State University, text fields must be non-empty, and price must be a positive number'
+      error: 'Invalid data. Text fields must be non-empty, and price must be a positive number.'
     });
   }
 
-  const normalizedName = normalizeTitle(homeworkToAdd.name);
-  const exists = homework.some(item => normalizeTitle(item.name) === normalizedName);
+  db.run(
+    `
+    INSERT INTO products
+    (name, category, type, university, courseLevel, format, professorStyle, price)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+    [
+      homeworkToAdd.name,
+      homeworkToAdd.category,
+      homeworkToAdd.type,
+      homeworkToAdd.university,
+      homeworkToAdd.courseLevel,
+      homeworkToAdd.format,
+      homeworkToAdd.professorStyle,
+      homeworkToAdd.price
+    ],
+    function (err) {
+      if (err) {
+        return res.status(409).json({
+          error: `Homework '${homeworkToAdd.name}' already exists or database error`
+        });
+      }
 
-  if (exists) {
-    return res.status(409).json({
-      error: `Homework '${homeworkToAdd.name}' already exists`
-    });
-  }
-
-  homework.push(homeworkToAdd);
-  res.status(201).json(homeworkToAdd);
+      res.status(201).json({
+        id: this.lastID,
+        ...homeworkToAdd
+      });
+    }
+  );
 });
 
 app.delete('/api/homework/:title', (req, res) => {
-  const title = req.params.title;
-  const index = findIndexByTitle(title);
+  const title = req.params.title.trim();
 
-  if (index === -1) {
-    return res.status(404).json({
-      error: `Homework '${title}' not found`
-    });
-  }
+  db.run(
+    'DELETE FROM products WHERE LOWER(name) = LOWER(?)',
+    [title],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
 
-  homework.splice(index, 1);
-  res.status(204).send();
+      if (this.changes === 0) {
+        return res.status(404).json({
+          error: `Homework '${title}' not found`
+        });
+      }
+
+      res.status(204).send();
+    }
+  );
 });
 
 app.listen(PORT, () => {
