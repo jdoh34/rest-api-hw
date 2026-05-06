@@ -13,6 +13,26 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const session = require('express-session');
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
+}));
+
+// Database setup
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./ecommerce.db');
+
+db.run(`CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+)`);
+
 const PORT = process.env.PORT || 3000;
 
 // In-memory state
@@ -153,18 +173,6 @@ app.get('/products/:identifier', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login', { title: 'Login' });
 });
-
-app.post('/login', (req, res) => {
-  res.redirect('/');
-});
-
-app.get('/signup', (req, res) => {
-  res.render('signup', { title: 'Sign Up' });
-});
-
-app.post('/signup', (req, res) => {
-  res.redirect('/products?discount=applied');
-});
 app.get('/profile', (req, res) => {
   res.render('profile', { title: 'My Profile' });
 });
@@ -259,44 +267,41 @@ app.delete('/api/homework/:title', (req, res) => {
   res.status(204).send();
 });
 
+
+
+app.get('/signup', (req, res) => {
+  res.render('signup', { title: 'Sign Up' });
+});
+
+app.post('/signup', (req, res) => {
+  const { name, email, password } = req.body;
+  db.run('INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+    [name, email, password], (err) => {
+    if (err) {
+      return res.status(400).send('Username or email already exists');
+    }
+    res.redirect('/login');
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  db.get('SELECT * FROM users WHERE username = ? AND password = ?',
+    [username, password], (err, user) => {
+    if (err || !user) {
+      return res.status(401).send('Invalid login');
+    }
+    req.session.user = user;
+    res.redirect('/');
+  });
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/login');
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-// ========== DATABASE SETUP ==========
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./ecommerce.db');
-
-db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    price REAL NOT NULL CHECK(price > 0),
-    stock INTEGER NOT NULL DEFAULT 0 CHECK(stock >= 0),
-    brand TEXT NOT NULL,
-    size REAL
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS cart_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT 1 CHECK(quantity >= 1),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    UNIQUE(user_id, product_id)
-  )`);
-});
-
-db.run(`INSERT OR IGNORE INTO products (name, price, stock, brand, size) VALUES 
-  ('air-max-90', 129.99, 10, 'nike', 10.0),
-  ('ultraboost-22', 179.99, 5, 'adidas', 9.5),
-  ('classic-leather', 89.99, 15, 'reebok', 11.0)
-`);
