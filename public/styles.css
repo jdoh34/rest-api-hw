@@ -9,7 +9,7 @@
 body {
   font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
   line-height: 1.6;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
   min-height: 100vh;
 }
 
@@ -35,7 +35,7 @@ nav {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -57,7 +57,7 @@ nav {
 }
 
 .nav-links a:hover {
-  color: #667eea;
+  color: #ea9f66;
 }
 
 .nav-links a::after {
@@ -67,7 +67,7 @@ nav {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
   transition: width 0.3s ease;
 }
 
@@ -125,7 +125,7 @@ nav {
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #549c61eb 0%, #530affa7 100%);
 }
 
 .product-card:hover {
@@ -135,19 +135,19 @@ nav {
 
 .product-card h3 {
   font-size: 1.8rem;
-  color: #333;
+  color: #442C8B;
   margin-bottom: 1rem;
   text-transform: capitalize;
 }
 
 .product-card p {
-  color: #666;
+  color: #442C8B;
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
 
 .product-card p:first-of-type {
-  color: #667eea;
+  color: #442C8B;;
   font-weight: 600;
   margin-top: 1rem;
 }
@@ -166,7 +166,7 @@ nav {
   display: inline-block;
   margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
   color: white;
   text-decoration: none;
   border-radius: 25px;
@@ -275,7 +275,7 @@ footer p {
 .logo-text {
   font-size: 1.3rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -310,9 +310,10 @@ footer p {
 }
 
 .logo-text {
+  font-family: "Playfair Display", serif;
   font-size: 1.3rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #b51e37f3 0%, #e76012a5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -355,7 +356,7 @@ footer p {
 .product-card {
   background: #fef9e6;
   border-radius: 8px 20px 20px 8px;
-  border-left: 12px solid #667eea;
+  border-left: 12px solid #eaac66;
   box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -462,4 +463,23 @@ footer p {
 .already {
   text-align: center;
   margin-top: 1rem;
+}
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  color: #DCAE27;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+h1 span {
+  font-style: italic;
+  color: #442C8B;
+}
+
+p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  color: #AE9882;
+  text-align: center;
 }
