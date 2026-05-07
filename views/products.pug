@@ -4,14 +4,14 @@ block title
   | Products
 
 block content
-  h1 Our Homework Services
+  h1 Assignments? Consider them handled. 
   
   .products-grid
     each product in products
       .product-card
         h3= product.name
-        p Category: #{product.category}
+        p Category: #{product.category.charAt(0).toUpperCase() + product.category.slice(1)}
         p Type: #{product.type}
         p University: #{product.university}
-        p Price: $#{product.price}
+        .price-bubble $#{product.price}
         a(href=`/products/${product.name}`) View Details →
