@@ -474,12 +474,87 @@ h1 {
 
 h1 span {
   font-style: italic;
-  color: #442C8B;
+  color: #6544c85e;
 }
 
 p {
   font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
-  color: #AE9882;
+  color: #F2ACB9;
   text-align: center;
+}
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+a[href="/products"].floating-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+a[href="/products"].floating-btn:hover {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #7a4fb0 0%, #4e8a3a 100%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.price-bubble {
+  display: inline-block;
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border-radius: 30px;
+  margin: 10px 0 5px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation links - normal styling */
+.nav-links {
+  display: flex !important;
+  gap: 2rem !important;
+  align-items: center !important;
+}
+
+.nav-links a {
+  text-decoration: none !important;
+  color: #333 !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 16px !important;
+}
+
+.nav-links a.signup-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+  border-radius: 25px !important;
+  padding: 6px 16px !important;
+  color: white !important;
 }
