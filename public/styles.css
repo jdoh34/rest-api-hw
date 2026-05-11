@@ -1,562 +1,381 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;500;600;700&display=swap");
-/* Global Styles */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap");
+
+/* 
+   Mixing Playfair Display for headings (fancy!) and Inter for everything else.
+*/
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
-  min-height: 100vh;
+html, body {
+  height: 100%;
 }
 
-/* Navigation Bar */
+body {
+  font-family: "Inter", sans-serif;
+  /* This purple-green gradient?  Took a few tries but it grew on me. */
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+  color: #1e293b;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation - kept it simple, no overcomplicating things */
 nav {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-decoration: none;
+  width: 50px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.logo-text {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
-  list-style: none;
+  align-items: center;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #333;
+  color: #475569;
   font-weight: 500;
-  transition: color 0.3s ease;
-  position: relative;
+  transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: #ea9f66;
+  color: #3b82f6;
 }
 
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-  transition: width 0.3s ease;
+/* Had to make the signup button stand out, so it gets a blue background */
+.signup-btn {
+  background: #3b82f6;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  color: white !important;
 }
 
-.nav-links a:hover::after {
-  width: 100%;
+.signup-btn:hover {
+  background: #2563eb !important;
 }
 
-/* Main Container */
+/* Container - keeps everything centered and readable */
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+  flex: 1;
 }
 
-/* Header */
-.main-header {
+/* The main heading needed to be visible against the gradient, so white text with shadow */
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
   text-align: center;
-  margin-bottom: 3rem;
-}
-
-.main-header h1 {
-  font-size: 2.5rem;
-  color: white;
+  margin-bottom: 0.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 1rem;
 }
 
-/* Products Grid - Flex Container */
+h1 span {
+  color: #ffeb3b;
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Products section - using grid because flex was acting weird on some screen sizes */
 .products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* Product Cards */
+/* Each product gets a white card. Clean, simple, doesn't distract */
 .product-card {
   background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  flex: 1;
-  min-width: 280px;
-  max-width: 350px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
   position: relative;
-  overflow: hidden;
-}
-
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(135deg, #549c61eb 0%, #530affa7 100%);
+  padding-bottom: 70px;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 .product-card h3 {
-  font-size: 1.8rem;
-  color: #442C8B;
-  margin-bottom: 1rem;
-  text-transform: capitalize;
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
 }
 
 .product-card p {
-  color: #442C8B;
+  color: #475569;
+  font-size: 0.875rem;
   margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+/* Price tag - bottom right corner, looks like a little badge */
+.price-bubble {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+  color: white;
+  font-weight: 700;
   font-size: 1rem;
-}
-
-.product-card p:first-of-type {
-  color: #442C8B;;
-  font-weight: 600;
-  margin-top: 1rem;
-}
-
-.product-duration {
-  display: inline-block;
-  background: #f0f0f0;
-  padding: 0.3rem 0.8rem;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.9rem;
-  margin: 0.5rem 0;
 }
 
-/* View Details Button */
 .view-details {
   display: inline-block;
-  margin-top: 1.5rem;
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-  color: white;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 8px 16px;
+  border-radius: 8px;
   text-decoration: none;
-  border-radius: 25px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 0.875rem;
   font-weight: 500;
-  text-align: center;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
 }
 
 .view-details:hover {
-  transform: translateX(5px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: #e2e8f0;
 }
 
-/* Footer */
+/* Add to cart button - still needs backend work, but the styling is ready */
+.add-to-cart {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: all 0.2s;
+}
+
+.add-to-cart:hover {
+  background: #2563eb;
+}
+
+/* Cart page table - nothing fancy, just gets the job done */
+.cart-table {
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cart-table th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.remove-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+}
+
+/* Footer - translucent so the gradient shows through */
 footer {
-  background: rgba(255, 255, 255, 0.95);
   text-align: center;
   padding: 2rem;
-  margin-top: 3rem;
-  color: #666;
-  border-radius: 15px 15px 0 0;
+  color: #ffffff;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: auto;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 footer p {
-  margin: 0;
+  color: #ffffff;
+  text-align: center;
 }
 
-/* Responsive Design */
+/* Discount banner - dark background, pops out but not too much */
+.discount-banner {
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.875rem;
+}
+
+.discount-banner a {
+  color: #ffeb3b;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.discount-banner span {
+  background: #3b82f6;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+/* Forms - kept them contained and easy to use */
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  font-family: "Playfair Display", serif;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.btn-primary {
+  width: 100%;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+}
+
+/* Making sure it doesn't look broken on phones */
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
-    gap: 1rem;
   }
   
-  .nav-links {
-    gap: 1.5rem;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .main-header h1 {
-    font-size: 2rem;
-  }
-  
-  .products-grid {
-    gap: 1.5rem;
-  }
-  
-  .product-card {
-    min-width: 250px;
-  }
-}
-
-@media (max-width: 480px) {
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
   }
   
-  .product-card h3 {
-    font-size: 1.5rem;
+  h1 {
+    font-size: 2rem;
   }
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  
+  .products-grid {
+    grid-template-columns: 1fr;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .cart-table {
+    font-size: 0.875rem;
   }
-}
-
-.product-card {
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-.product-card:nth-child(1) { animation-delay: 0.1s; }
-.product-card:nth-child(2) { animation-delay: 0.2s; }
-.product-card:nth-child(3) { animation-delay: 0.3s; }
-/* Logo Styling */
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-}
-
-.logo {
-  width: 60px;
-  height: auto;
-  transition: transform 0.3s ease;
-  border-radius: 12px;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-.logo-text {
-  font-size: 1.3rem;
-  font-weight: bold;
-  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (max-width: 768px) {
-  .logo {
-    width: 45px;
+  
+  .cart-table th,
+  .cart-table td {
+    padding: 0.5rem;
   }
-  .logo-text {
-    font-size: 1rem;
-  }
-}
-
-/* Logo Styling */
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-}
-
-.logo {
-  width: 60px;
-  height: auto;
-  transition: transform 0.3s ease;
-  border-radius: 12px;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-.logo-text {
-  font-family: "Playfair Display", serif;
-  font-size: 1.3rem;
-  font-weight: bold;
-  background: linear-gradient(135deg, #b51e37f3 0%, #e76012a5 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (max-width: 768px) {
-  .logo {
-    width: 45px;
-  }
-  .logo-text {
-    font-size: 1rem;
-  }
-}
-
-/* Larger Logo and Brand Text */
-.logo {
-  width: 100px !important;
-  height: auto;
-}
-
-.logo-text {
-  font-size: 2rem !important;
-  font-weight: 800 !important;
-}
-
-.logo-container {
-  gap: 1.2rem !important;
-}
-
-@media (max-width: 768px) {
-  .logo {
-    width: 70px !important;
-  }
-  .logo-text {
-    font-size: 1.2rem !important;
-  }
-}
-
-/* Book-shaped Product Cards */
-.product-card {
-  background: #fef9e6;
-  border-radius: 8px 20px 20px 8px;
-  border-left: 12px solid #eaac66;
-  box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 12px 12px 0 rgba(0,0,0,0.15);
-}
-
-/* Book spine effect */
-.product-card::after {
-  content: "📖";
-  position: absolute;
-  bottom: 10px;
-  right: 15px;
-  font-size: 2rem;
-  opacity: 0.3;
-}
-
-/* Book page lines effect */
-.product-card h3 {
-  border-bottom: 2px dotted #ddd;
-  padding-bottom: 8px;
-}
-
-/* Discount Banner */
-.discount-banner {
-  background: linear-gradient(135deg, #ffd89b, #19547b);
-  color: white;
-  text-align: center;
-  padding: 12px;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.discount-banner a {
-  color: #ffd700;
-  margin-left: 10px;
-  text-decoration: none;
-}
-
-.discount-banner a:hover {
-  text-decoration: underline;
-}
-
-.discount-banner span {
-  background: #ffd700;
-  color: #1a1a2e;
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-
-/* Sign Up Button */
-.signup-btn {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
-  border-radius: 25px !important;
-  padding: 6px 16px !important;
-  color: white !important;
-  font-weight: bold;
-}
-
-.signup-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Signup Form */
-.signup-form {
-  max-width: 500px;
-  margin: 2rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.signup-form input, .signup-form select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-.signup-form button {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 12px;
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.signup-form button:hover {
-  transform: scale(1.02);
-}
-
-.already {
-  text-align: center;
-  margin-top: 1rem;
-}
-h1 {
-  font-family: "Playfair Display", serif;
-  font-size: 3rem;
-  color: #DCAE27;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-h1 span {
-  font-style: italic;
-  color: #6544c85e;
-}
-
-p {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.2rem;
-  color: #F2ACB9;
-  text-align: center;
-}
-html, body {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  flex: 1;
-}
-
-footer {
-  margin-top: auto;
-}
-a[href="/products"].floating-btn {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
-  color: white;
-  padding: 15px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-  font-family: "Poppins", sans-serif;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-}
-
-a[href="/products"].floating-btn:hover {
-  transform: scale(1.08);
-  background: linear-gradient(135deg, #7a4fb0 0%, #4e8a3a 100%);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.price-bubble {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 8px 16px;
-  border-radius: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
-/* Navigation links - normal styling */
-.nav-links {
-  display: flex !important;
-  gap: 2rem !important;
-  align-items: center !important;
-}
-
-.nav-links a {
-  text-decoration: none !important;
-  color: #333 !important;
-  font-weight: 500 !important;
-  background: transparent !important;
-  padding: 0 !important;
-  font-size: 16px !important;
-}
-
-.nav-links a.signup-btn {
-  background: linear-gradient(135deg, #f093fb, #f5576c) !important;
-  border-radius: 25px !important;
-  padding: 6px 16px !important;
-  color: white !important;
 }
