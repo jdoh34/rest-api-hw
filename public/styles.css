@@ -525,15 +525,17 @@ a[href="/products"].floating-btn:hover {
 }
 
 .price-bubble {
-  display: inline-block;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
   background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
   color: white;
   font-weight: bold;
   font-size: 1rem;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 30px;
-  margin: 10px 0 5px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
 }
 
 /* Navigation links - normal styling */
