@@ -6,30 +6,32 @@ block title
 block content
   h1 Shopping Cart
 
-  table
-    thead
-      tr
-        th Item
-        th Type
-        th Quantity
-        th Price
-    tbody
-      tr
-        td Math Worksheet
-        td Worksheet
-        td 1
-        td $5.00
-      tr
-        td History Essay Help
-        td Essay
-        td 2
-        td $10.00
-      tr
-        td Science Lab Report
-        td Lab Report
-        td 1
-        td $7.50
+  if cartItems && cartItems.length > 0
+    table.cart-table
+      thead
+        tr
+          th Item
+          th Price
+          th Quantity
+          th Subtotal
+          th
+      tbody
+        each item in cartItems
+          tr
+            td= item.name
+            td $#{item.price.toFixed(2)}
+            td= item.quantity
+            td $#{(item.price * item.quantity).toFixed(2)}
+            td
+              form(action="/cart/remove", method="POST")
+                input(type="hidden", name="name", value=item.name)
+                button.remove-btn(type="submit") Remove
 
-  h3 Total: $22.50
+    p.cart-total Total: $#{total}
 
-  p Example
+    a(href="/products", style="display:inline-block;background:#3b82f6;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;margin-top:1.5rem;") ← Keep Shopping
+
+  else
+    div(style="background:white;border-radius:16px;padding:3rem;text-align:center;")
+      p(style="font-size:1.2rem;margin-bottom:1.5rem;color:#475569;") Your cart is empty!
+      a(href="/products", style="background:#3b82f6;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;") Browse Services →

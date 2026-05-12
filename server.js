@@ -2,11 +2,20 @@
 
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session setup — cart lives here
+app.use(session({
+  secret: 'gator-assignment-aid-secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hours
+}));
 
 // Pug view engine setup
 app.set('view engine', 'pug');
@@ -15,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
 
-// In-memory state
+// In-memory products (homework assignments)
 const homework = [
   {
     name: 'Critical Reading Response',
@@ -49,7 +58,7 @@ const homework = [
   },
   {
     name: 'Problem Set',
-    category: '#Mathematics',
+    category: 'Mathematics',
     type: 'Worksheet',
     university: 'San Francisco State University',
     courseLevel: 'Lower-division',
@@ -116,6 +125,12 @@ function isValidHomework(item) {
   );
 }
 
+// Helper — ensure session cart exists
+function getCart(req) {
+  if (!req.session.cart) req.session.cart = [];
+  return req.session.cart;
+}
+
 // ========== VIEW ROUTES ==========
 
 app.get('/', (req, res) => {
@@ -165,16 +180,63 @@ app.get('/signup', (req, res) => {
 app.post('/signup', (req, res) => {
   res.redirect('/products?discount=applied');
 });
+
 app.get('/profile', (req, res) => {
   res.render('profile', { title: 'My Profile' });
 });
 
-app.get('/cart', (req, res) => {
-  res.render('cart', { title: 'Shopping Cart' });
-});
-
 app.get('/home', (req, res) => {
   res.render('home', { title: 'Home' });
+});
+
+// ========== CART ROUTES ==========
+
+// View cart
+app.get('/cart', (req, res) => {
+  const cart = getCart(req);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  res.render('cart', {
+    title: 'Shopping Cart',
+    cartItems: cart,
+    total: total.toFixed(2)
+  });
+});
+
+// Add item to cart
+app.post('/cart/add', (req, res) => {
+  const { name, price } = req.body;
+  const cart = getCart(req);
+
+  if (!name || !price) {
+    return res.status(400).send('Missing product info');
+  }
+
+  const existing = cart.find(item => normalizeTitle(item.name) === normalizeTitle(name));
+
+  if (existing) {
+    // Already in cart — bump quantity
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      name: String(name),
+      price: parseFloat(price),
+      quantity: 1
+    });
+  }
+
+  res.redirect('/cart');
+});
+
+// Remove item from cart
+app.post('/cart/remove', (req, res) => {
+  const { name } = req.body;
+  const cart = getCart(req);
+
+  req.session.cart = cart.filter(
+    item => normalizeTitle(item.name) !== normalizeTitle(name)
+  );
+
+  res.redirect('/cart');
 });
 
 // ========== API ROUTES ==========
@@ -190,11 +252,9 @@ app.get('/api/homework', (req, res) => {
 
 app.get('/api/homework/:title', (req, res) => {
   const idx = findIndexByTitle(req.params.title);
-
   if (idx === -1) {
     return res.status(404).json({ error: 'not found' });
   }
-
   res.status(200).json(homework[idx]);
 });
 
@@ -262,41 +322,3 @@ app.delete('/api/homework/:title', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-// ========== DATABASE SETUP ==========
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./ecommerce.db');
-
-db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    price REAL NOT NULL CHECK(price > 0),
-    stock INTEGER NOT NULL DEFAULT 0 CHECK(stock >= 0),
-    brand TEXT NOT NULL,
-    size REAL
-  )`);
-
-  db.run(`CREATE TABLE IF NOT EXISTS cart_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT 1 CHECK(quantity >= 1),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    UNIQUE(user_id, product_id)
-  )`);
-});
-
-db.run(`INSERT OR IGNORE INTO products (name, price, stock, brand, size) VALUES 
-  ('air-max-90', 129.99, 10, 'nike', 10.0),
-  ('ultraboost-22', 179.99, 5, 'adidas', 9.5),
-  ('classic-leather', 89.99, 15, 'reebok', 11.0)
-`);

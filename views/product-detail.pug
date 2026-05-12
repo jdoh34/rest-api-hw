@@ -5,34 +5,40 @@ block title
 
 block content
   h1= product.name
-  
-  .product-detail
+
+  .product-card(style="max-width:600px;margin:2rem auto;")
     p
       strong Category:
-      span= product.category
+      |  #{product.category}
 
     p
       strong Type:
-      span= product.type
+      |  #{product.type}
 
     p
       strong University:
-      span= product.university
+      |  #{product.university}
 
     p
       strong Course Level:
-      span= product.courseLevel
+      |  #{product.courseLevel}
 
     p
       strong Format:
-      span= product.format
+      |  #{product.format}
 
     p
       strong Professor Style:
-      span= product.professorStyle
+      |  #{product.professorStyle}
 
     p
       strong Price:
-      span $#{product.price}
+      |  $#{product.price.toFixed(2)}
 
-    a.button(href="/products") ← Back to Products
+    div(style="display:flex;gap:1rem;margin-top:1.5rem;align-items:center;")
+      a.view-details(href="/products") ← Back to Products
+
+      form(action="/cart/add", method="POST", style="margin:0;display:flex;")
+        input(type="hidden", name="name", value=product.name)
+        input(type="hidden", name="price", value=product.price)
+        button.add-to-cart(type="submit", style="line-height:1.5;display:block;") 🛒 Add to Cart
