@@ -5,8 +5,7 @@ block title
 
 block content
   h1 Shopping Cart
-
-  table
+  table.cart-table
     thead
       tr
         th Item
@@ -29,7 +28,23 @@ block content
         td Lab Report
         td 1
         td $7.50
-
   h3 Total: $22.50
 
-  p Example
+  form(action='/checkout' method='POST').form-container
+    h2 Checkout
+    .form-group
+      label Full Name
+      input(type='text' name='name' placeholder='Enter your full name' required)
+    .form-group
+      label Email
+      input(type='email' name='email' placeholder='Enter your email' required)
+    .form-group
+      label Card Number
+      input(type='text' name='card' placeholder='1234 5678 9012 3456' maxlength='19' required)
+    .form-group
+      label Expiry Date
+      input(type='text' name='expiry' placeholder='MM/YY' maxlength='5' required)
+    .form-group
+      label CVV
+      input(type='text' name='cvv' placeholder='123' maxlength='3' required)
+    button.btn-primary(type='submit') Place Order →
