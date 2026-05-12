@@ -165,12 +165,25 @@ app.get('/signup', (req, res) => {
 app.post('/signup', (req, res) => {
   res.redirect('/products?discount=applied');
 });
+
 app.get('/profile', (req, res) => {
   res.render('profile', { title: 'My Profile' });
 });
 
 app.get('/cart', (req, res) => {
   res.render('cart', { title: 'Shopping Cart' });
+});
+
+app.post('/checkout', (req, res) => {
+  const now = new Date();
+  res.render('confirmation', {
+    title: 'Order Confirmed',
+    name: req.body.name,
+    email: req.body.email,
+    orderNumber: Math.floor(Math.random() * 900000) + 100000,
+    date: now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+    time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  });
 });
 
 app.get('/home', (req, res) => {
@@ -262,6 +275,7 @@ app.delete('/api/homework/:title', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
 // ========== DATABASE SETUP ==========
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./ecommerce.db');
