@@ -1,0 +1,40 @@
+extends layout
+
+block title
+  | Order Confirmed
+
+block content
+  .form-container
+    h2 ✅ Order Confirmed!
+    p Thank you, #{name}!
+    p A confirmation has been sent to #{email}.
+    hr
+    p Order ##{orderNumber}
+    p Date: #{date}
+    p Time: #{time}
+    br
+    h3 Items Ordered
+    table.cart-table
+      thead
+        tr
+          th Item
+          th Type
+          th Price
+      tbody
+        tr
+          td Math Worksheet
+          td Worksheet
+          td $5.00
+        tr
+          td History Essay Help
+          td Essay
+          td $10.00
+        tr
+          td Science Lab Report
+          td Lab Report
+          td $7.50
+    h3 Total: $22.50
+    br
+    a(href='/products') Browse More Products
+    |  
+    a(href='/') Back to Home
