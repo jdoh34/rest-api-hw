@@ -5,26 +5,22 @@ const path = require('path');
 const session = require('express-session');
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session setup — cart lives here
 app.use(session({
   secret: 'gator-assignment-aid-secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hours
+  cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
-// Pug view engine setup
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 3000;
 
-// In-memory products (homework assignments)
 const homework = [
   {
     name: 'Critical Reading Response',
@@ -99,33 +95,17 @@ function findIndexByTitle(title) {
 
 function isValidHomework(item) {
   return (
-    item.name &&
-    typeof item.name === 'string' &&
-    item.name.trim() !== '' &&
-    item.category &&
-    typeof item.category === 'string' &&
-    item.category.trim() !== '' &&
-    item.type &&
-    typeof item.type === 'string' &&
-    item.type.trim() !== '' &&
-    item.university &&
-    item.university === 'San Francisco State University' &&
-    item.courseLevel &&
-    typeof item.courseLevel === 'string' &&
-    item.courseLevel.trim() !== '' &&
-    item.format &&
-    typeof item.format === 'string' &&
-    item.format.trim() !== '' &&
-    item.professorStyle &&
-    typeof item.professorStyle === 'string' &&
-    item.professorStyle.trim() !== '' &&
-    item.price !== undefined &&
-    typeof item.price === 'number' &&
-    item.price > 0
+    item.name && typeof item.name === 'string' && item.name.trim() !== '' &&
+    item.category && typeof item.category === 'string' && item.category.trim() !== '' &&
+    item.type && typeof item.type === 'string' && item.type.trim() !== '' &&
+    item.university && item.university === 'San Francisco State University' &&
+    item.courseLevel && typeof item.courseLevel === 'string' && item.courseLevel.trim() !== '' &&
+    item.format && typeof item.format === 'string' && item.format.trim() !== '' &&
+    item.professorStyle && typeof item.professorStyle === 'string' && item.professorStyle.trim() !== '' &&
+    item.price !== undefined && typeof item.price === 'number' && item.price > 0
   );
 }
 
-// Helper — ensure session cart exists
 function getCart(req) {
   if (!req.session.cart) req.session.cart = [];
   return req.session.cart;
@@ -138,31 +118,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-  res.render('products', {
-    title: 'All Products',
-    products: homework
-  });
+  res.render('products', { title: 'All Products', products: homework });
 });
 
 app.get('/products/:identifier', (req, res) => {
   const identifier = req.params.identifier;
-  const normalizedIdentifier = normalizeTitle(identifier);
-
   const product = homework.find(
-    item => normalizeTitle(item.name) === normalizedIdentifier
+    item => normalizeTitle(item.name) === normalizeTitle(identifier)
   );
-
   if (!product) {
-    return res.status(404).render('404', {
-      title: 'Not Found',
-      identifier: identifier
-    });
+    return res.status(404).render('404', { title: 'Not Found', identifier });
   }
-
-  res.render('product-detail', {
-    title: product.name,
-    product: product
-  });
+  res.render('product-detail', { title: product.name, product });
 });
 
 app.get('/login', (req, res) => {
@@ -191,52 +158,46 @@ app.get('/home', (req, res) => {
 
 // ========== CART ROUTES ==========
 
-// View cart
 app.get('/cart', (req, res) => {
   const cart = getCart(req);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const confirmed = req.query.confirmed === 'true';
+  const lastOrder = req.session.lastOrder || null;
+  if (confirmed) req.session.lastOrder = null;
   res.render('cart', {
     title: 'Shopping Cart',
     cartItems: cart,
-    total: total.toFixed(2)
+    total: total.toFixed(2),
+    confirmed,
+    lastOrder
   });
 });
 
-// Add item to cart
 app.post('/cart/add', (req, res) => {
   const { name, price } = req.body;
   const cart = getCart(req);
-
-  if (!name || !price) {
-    return res.status(400).send('Missing product info');
-  }
-
+  if (!name || !price) return res.status(400).send('Missing product info');
   const existing = cart.find(item => normalizeTitle(item.name) === normalizeTitle(name));
-
   if (existing) {
-    // Already in cart — bump quantity
     existing.quantity += 1;
   } else {
-    cart.push({
-      name: String(name),
-      price: parseFloat(price),
-      quantity: 1
-    });
+    cart.push({ name: String(name), price: parseFloat(price), quantity: 1 });
   }
-
   res.redirect('/cart');
 });
 
-// Remove item from cart
 app.post('/cart/remove', (req, res) => {
   const { name } = req.body;
   const cart = getCart(req);
-
-  req.session.cart = cart.filter(
-    item => normalizeTitle(item.name) !== normalizeTitle(name)
-  );
-
+  req.session.cart = cart.filter(item => normalizeTitle(item.name) !== normalizeTitle(name));
   res.redirect('/cart');
+});
+
+app.post('/cart/checkout', (req, res) => {
+  const cart = getCart(req);
+  req.session.lastOrder = [...cart];
+  req.session.cart = [];
+  res.redirect('/cart?confirmed=true');
 });
 
 // ========== API ROUTES ==========
@@ -252,29 +213,17 @@ app.get('/api/homework', (req, res) => {
 
 app.get('/api/homework/:title', (req, res) => {
   const idx = findIndexByTitle(req.params.title);
-  if (idx === -1) {
-    return res.status(404).json({ error: 'not found' });
-  }
+  if (idx === -1) return res.status(404).json({ error: 'not found' });
   res.status(200).json(homework[idx]);
 });
 
 app.post('/add', (req, res) => {
   const newHomework = req.body;
-
-  if (
-    !newHomework.name ||
-    !newHomework.category ||
-    !newHomework.type ||
-    !newHomework.courseLevel ||
-    !newHomework.format ||
-    !newHomework.professorStyle ||
-    newHomework.price === undefined
-  ) {
-    return res.status(400).json({
-      error: 'Missing required fields. Need: name, category, type, courseLevel, format, professorStyle, price'
-    });
+  if (!newHomework.name || !newHomework.category || !newHomework.type ||
+      !newHomework.courseLevel || !newHomework.format || !newHomework.professorStyle ||
+      newHomework.price === undefined) {
+    return res.status(400).json({ error: 'Missing required fields.' });
   }
-
   const homeworkToAdd = {
     name: String(newHomework.name).trim(),
     category: String(newHomework.category).toLowerCase().trim(),
@@ -285,36 +234,22 @@ app.post('/add', (req, res) => {
     professorStyle: String(newHomework.professorStyle).toLowerCase().trim(),
     price: Number(newHomework.price)
   };
-
   if (!isValidHomework(homeworkToAdd)) {
-    return res.status(400).json({
-      error: 'Invalid data. university must be San Francisco State University, text fields must be non-empty, and price must be a positive number'
-    });
+    return res.status(400).json({ error: 'Invalid data.' });
   }
-
-  const normalizedName = normalizeTitle(homeworkToAdd.name);
-  const exists = homework.some(item => normalizeTitle(item.name) === normalizedName);
-
+  const exists = homework.some(item => normalizeTitle(item.name) === normalizeTitle(homeworkToAdd.name));
   if (exists) {
-    return res.status(409).json({
-      error: `Homework '${homeworkToAdd.name}' already exists`
-    });
+    return res.status(409).json({ error: `Homework '${homeworkToAdd.name}' already exists` });
   }
-
   homework.push(homeworkToAdd);
   res.status(201).json(homeworkToAdd);
 });
 
 app.delete('/api/homework/:title', (req, res) => {
-  const title = req.params.title;
-  const index = findIndexByTitle(title);
-
+  const index = findIndexByTitle(req.params.title);
   if (index === -1) {
-    return res.status(404).json({
-      error: `Homework '${title}' not found`
-    });
+    return res.status(404).json({ error: `Homework '${req.params.title}' not found` });
   }
-
   homework.splice(index, 1);
   res.status(204).send();
 });

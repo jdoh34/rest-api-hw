@@ -6,7 +6,26 @@ block title
 block content
   h1 Shopping Cart
 
-  if cartItems && cartItems.length > 0
+  if confirmed && lastOrder
+    div(style="max-width:700px;margin:0 auto;background:white;border-radius:16px;padding:2.5rem;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);")
+      div(style="font-size:4rem;margin-bottom:1rem;") ✅
+      h2(style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.5rem;") Order Confirmed!
+      p(style="color:#475569;margin-bottom:2rem;") Thanks for your order. We'll get started right away!
+      table(style="width:100%;border-collapse:collapse;text-align:left;margin-bottom:1.5rem;")
+        thead
+          tr
+            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Item
+            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Qty
+            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Subtotal
+        tbody
+          each item in lastOrder
+            tr
+              td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.name
+              td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.quantity
+              td(style="padding:8px;border-bottom:1px solid #f1f5f9;") $#{(item.price * item.quantity).toFixed(2)}
+      a(href="/products", style="background:#3b82f6;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;") Browse More Services →
+
+  else if cartItems && cartItems.length > 0
     table.cart-table
       thead
         tr
@@ -29,7 +48,10 @@ block content
 
     p.cart-total Total: $#{total}
 
-    a(href="/products", style="display:inline-block;background:#3b82f6;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;margin-top:1.5rem;") ← Keep Shopping
+    div(style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;flex-wrap:wrap;gap:1rem;")
+      a(href="/products", style="background:#f1f5f9;color:#1e293b;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;") ← Keep Shopping
+      form(action="/cart/checkout", method="POST", style="margin:0;display:flex;")
+        button(type="submit", style="background:#22c55e;color:white;padding:10px 24px;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;") Proceed to Checkout →
 
   else
     div(style="background:white;border-radius:16px;padding:3rem;text-align:center;")
