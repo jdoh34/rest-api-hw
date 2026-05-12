@@ -25,29 +25,26 @@ const homework = [
   {
     name: 'Critical Reading Response',
     category: 'Humanities',
-    type: 'Reading-Response',
-    university: 'San Francisco State University',
-    courseLevel: 'Lower-division',
+    type: 'Reading Response',
+    courseLevel: 'Lower Division',
     format: 'Essay',
-    professorStyle: 'Analysis-heavy',
+    professorStyle: 'Analysis Heavy',
     price: 15
   },
   {
     name: 'Research Summary',
-    category: 'Social-sciences',
-    type: 'Summary-paper',
-    university: 'San Francisco State University',
-    courseLevel: 'Upper-division',
-    format: 'Written-report',
-    professorStyle: 'Source-based',
+    category: 'Social Sciences',
+    type: 'Summary Paper',
+    courseLevel: 'Upper Division',
+    format: 'Written Report',
+    professorStyle: 'Source Based',
     price: 20
   },
   {
     name: 'Lab Write-Up',
-    category: 'Natural-Sciences',
-    type: 'Lab-report',
-    university: 'San Francisco State University',
-    courseLevel: 'Lower-division',
+    category: 'Natural Sciences',
+    type: 'Lab Report',
+    courseLevel: 'Lower Division',
     format: 'Report',
     professorStyle: 'Structured',
     price: 25
@@ -56,31 +53,82 @@ const homework = [
     name: 'Problem Set',
     category: 'Mathematics',
     type: 'Worksheet',
-    university: 'San Francisco State University',
-    courseLevel: 'Lower-division',
-    format: 'Problem-solving',
-    professorStyle: 'Show-your-work',
+    courseLevel: 'Lower Division',
+    format: 'Problem Solving',
+    professorStyle: 'Show Your Work',
     price: 18
   },
   {
     name: 'Case Study Reflection',
     category: 'Business',
     type: 'Reflection',
-    university: 'San Francisco State University',
-    courseLevel: 'Upper-division',
-    format: 'Short-essay',
-    professorStyle: 'Application-based',
+    courseLevel: 'Upper Division',
+    format: 'Short Essay',
+    professorStyle: 'Application Based',
     price: 22
   },
   {
     name: 'Design Draft',
-    category: 'Creative-arts',
-    type: 'Project-draft',
-    university: 'San Francisco State University',
-    courseLevel: 'Upper-division',
-    format: 'Portfolio-piece',
-    professorStyle: 'Project-based',
+    category: 'Creative Arts',
+    type: 'Project Draft',
+    courseLevel: 'Upper Division',
+    format: 'Portfolio Piece',
+    professorStyle: 'Project Based',
     price: 30
+  },
+  {
+    name: 'Web Development Project',
+    category: 'Computer Science',
+    type: 'Coding Project',
+    courseLevel: 'Upper Division',
+    format: 'Source Code',
+    professorStyle: 'Project Based',
+    price: 45
+  },
+  {
+    name: 'Psychology Case Study',
+    category: 'Social Sciences',
+    type: 'Case Study',
+    courseLevel: 'Upper Division',
+    format: 'Written Report',
+    professorStyle: 'Research Based',
+    price: 28
+  },
+  {
+    name: 'Marketing Campaign Plan',
+    category: 'Business',
+    type: 'Strategic Plan',
+    courseLevel: 'Upper Division',
+    format: 'Written Report',
+    professorStyle: 'Application Based',
+    price: 32
+  },
+  {
+    name: 'Research Poster',
+    category: 'Natural Sciences',
+    type: 'Poster Project',
+    courseLevel: 'Upper Division',
+    format: 'Poster',
+    professorStyle: 'Visual Presentation',
+    price: 40
+  },
+  {
+    name: 'Infographic Poster',
+    category: 'Social Sciences',
+    type: 'Poster Project',
+    courseLevel: 'Lower Division',
+    format: 'Poster',
+    professorStyle: 'Visual Communication',
+    price: 28
+  },
+  {
+    name: 'Philosophy Argumentative Essay',
+    category: 'Humanities',
+    type: 'Argumentative Essay',
+    courseLevel: 'Upper Division',
+    format: 'Essay',
+    professorStyle: 'Thesis Driven',
+    price: 25
   }
 ];
 

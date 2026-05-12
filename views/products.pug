@@ -12,6 +12,5 @@ block content
         h3= product.name
         p Category: #{product.category.charAt(0).toUpperCase() + product.category.slice(1)}
         p Type: #{product.type}
-        p University: #{product.university}
         .price-bubble $#{product.price}
         a(href=`/products/${product.name}`) View Details →
