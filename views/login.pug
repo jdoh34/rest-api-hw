@@ -4,15 +4,20 @@ block title
   | Login
 
 block content
-  h1 Login
+  .form-container
+    h2 Login
 
-  form(action="/login", method="POST")
-    div
-      label(for="username") Username:
-      input#username(type="text", name="username", required)
+    form(action="/login", method="POST")
+      .form-group
+        label(for="email") Email
+        input#email(type="email", name="email", required)
 
-    div
-      label(for="password") Password:
-      input#password(type="password", name="password", required)
+      .form-group
+        label(for="password") Password
+        input#password(type="password", name="password", required)
 
-    button(type="submit") Log In
+      button.btn-primary(type="submit") Log In
+
+    p.already
+      | Don't have an account? 
+      a(href="/signup") Sign up
