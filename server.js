@@ -101,6 +101,7 @@ app.get('/cart', (req, res) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   res.render('cart', {
+    user: req.session.user,
     title: 'Shopping Cart',
     cartItems: cart,
     total: total.toFixed(2)

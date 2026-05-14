@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap");
 
-/* 
-   Mixing Playfair Display for headings (fancy!) and Inter for everything else.
-*/
-
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +12,6 @@ html, body {
 
 body {
   font-family: "Inter", sans-serif;
-  /* This purple-green gradient?  Took a few tries but it grew on me. */
   background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
   color: #1e293b;
   line-height: 1.5;
@@ -25,7 +20,6 @@ body {
   flex-direction: column;
 }
 
-/* Navigation - kept it simple, no overcomplicating things */
 nav {
   background: white;
   border-bottom: 1px solid #e2e8f0;
@@ -62,7 +56,7 @@ nav {
   font-family: "Playfair Display", serif;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #5a66ce;
+  color: #0f172a;
 }
 
 .nav-links {
@@ -82,7 +76,6 @@ nav {
   color: #3b82f6;
 }
 
-/* Had to make the signup button stand out, so it gets a blue background */
 .signup-btn {
   background: #3b82f6;
   border-radius: 8px !important;
@@ -94,7 +87,6 @@ nav {
   background: #2563eb !important;
 }
 
-/* Container - keeps everything centered and readable */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -102,7 +94,6 @@ nav {
   flex: 1;
 }
 
-/* The main heading needed to be visible against the gradient, so white text with shadow */
 h1 {
   font-family: "Playfair Display", serif;
   font-size: 3rem;
@@ -113,22 +104,6 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-h1 span {
-  color: #ffffff;
-  font-style: italic;
-}
-
-.hero-subtitle {
-  font-family: "Playfair Display", serif;
-  font-size: 1.2rem;
-  font-style: italic;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Products section - using grid because flex was acting weird on some screen sizes */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -136,7 +111,6 @@ h1 span {
   margin-top: 2rem;
 }
 
-/* Each product gets a white card. Clean, simple, doesn't distract */
 .product-card {
   background: white;
   border-radius: 16px;
@@ -157,7 +131,7 @@ h1 span {
   font-family: "Playfair Display", serif;
   font-size: 1.3rem;
   font-weight: 600;
-  color: #d1158985;
+  color: #0f172a;
   margin-bottom: 0.75rem;
 }
 
@@ -168,7 +142,6 @@ h1 span {
   text-align: left;
 }
 
-/* Price tag - bottom right corner, looks like a little badge */
 .price-bubble {
   position: absolute;
   bottom: 16px;
@@ -194,11 +167,6 @@ h1 span {
   margin-top: 0.5rem;
 }
 
-.view-details:hover {
-  background: #e2e8f0;
-}
-
-/* Add to cart button - still needs backend work, but the styling is ready */
 .add-to-cart {
   background: #3b82f6;
   color: white;
@@ -209,14 +177,8 @@ h1 span {
   font-weight: 500;
   cursor: pointer;
   margin-left: 0.5rem;
-  transition: all 0.2s;
 }
 
-.add-to-cart:hover {
-  background: #2563eb;
-}
-
-/* Cart page table - nothing fancy, just gets the job done */
 .cart-table {
   width: 100%;
   background: white;
@@ -225,8 +187,7 @@ h1 span {
   border-collapse: collapse;
 }
 
-.cart-table th,
-.cart-table td {
+.cart-table th, .cart-table td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
@@ -237,15 +198,8 @@ h1 span {
   font-weight: 600;
 }
 
-.cart-total {
-  text-align: right;
-  margin-top: 1.5rem;n
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
 .remove-btn {
-  background: #8b5cf6;
+  background: #ef4444;
   color: white;
   border: none;
   padding: 4px 12px;
@@ -254,11 +208,6 @@ h1 span {
   font-size: 0.75rem;
 }
 
-.remove-btn:hover {
-  background: #7c3aed;
-}
-
-/* Footer - translucent so the gradient shows through */
 footer {
   text-align: center;
   padding: 2rem;
@@ -268,12 +217,6 @@ footer {
   background: rgba(0, 0, 0, 0.1);
 }
 
-footer p {
-  color: #ffffff;
-  text-align: center;
-}
-
-/* Discount banner - dark background, pops out but not too much */
 .discount-banner {
   background: #0f172a;
   color: white;
@@ -282,104 +225,6 @@ footer p {
   font-size: 0.875rem;
 }
 
-.discount-banner a {
-  color: #ffeb3b;
-  margin-left: 8px;
-  text-decoration: none;
-}
-
-.discount-banner span {
-  background: #3b82f6;
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-
-/* Forms - kept them contained and easy to use */
-.form-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-container h2 {
-  font-family: "Playfair Display", serif;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #3b82f6;
-}
-
-.btn-primary {
-  width: 100%;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background: #2563eb;
-}
-
-/* Making sure it doesn't look broken on phones */
-@media (max-width: 768px) {
-  .nav-container {
-    flex-direction: column;
-  }
-  
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .cart-table {
-    font-size: 0.875rem;
-  }
-  
-  .cart-table th,
-  .cart-table td {
-    padding: 0.5rem;
-  }
-}
-/* Signup form - soft rounded bubbles */
 .signup-form {
   max-width: 500px;
   margin: 2rem auto;
@@ -389,8 +234,7 @@ footer p {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.signup-form input,
-.signup-form select {
+.signup-form input, .signup-form select {
   width: 100%;
   padding: 14px 16px;
   margin: 10px 0;
@@ -398,15 +242,6 @@ footer p {
   border-radius: 60px;
   font-size: 1rem;
   background: #f9fafb;
-  transition: all 0.2s;
-}
-
-.signup-form input:focus,
-.signup-form select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .signup-form button {
@@ -420,210 +255,75 @@ footer p {
   font-weight: 600;
   cursor: pointer;
   margin-top: 16px;
-  transition: all 0.2s;
 }
 
-.signup-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.already {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #ffffff;
-}
-
-.already a {
-  color: #ffeb3b;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.already a:hover {
-  text-decoration: underline;
-}
 .user-welcome {
   color: #3b82f6;
   font-weight: 500;
   margin-right: 0.5rem;
 }
 
-
-.logout-btn:hover {
-  background: #7c3aed;
-}
-
-.welcome-banner {
-  text-align: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 20px;
-  margin: 2rem auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-banner h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.welcome-banner p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-.discount-code {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 16px;
-  margin-bottom: 2rem;
-}
-
-.discount-code .code {
-  font-size: 2rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  background: white;
-  color: #667eea;
-  display: inline-block;
-  padding: 0.5rem 1.5rem;
-  border-radius: 40px;
-  margin: 0.5rem 0;
-  font-family: monospace;
-}
-
-.discount-code span {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-.empty-cart {
-  text-align: center;
-  padding: 3rem;
-}
-
-.empty-cart p {
-  font-size: 1.2rem;
-  color: #ffffff;
-  margin-bottom: 1.5rem;
-}
-
-.empty-cart .btn-primary {
-  display: inline-block;
-  margin-top: 0;
-}
-
-
-.logout-btn:hover {
-  background: linear-gradient(135deg, #2d6a4f 0%, #4e8a3a 100%) !important;
-  transform: scale(1.05);
-}
-
-.btn-primary:hover {
-  background: #2d6a4f !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.signup-form button:hover {
-  background: linear-gradient(135deg, #2d6a4f 0%, #4e8a3a 100%) !important;
-  transform: translateY(-2px);
-}
-
-.logout-btn:hover {
-  background: linear-gradient(135deg, #2d6a4f 0%, #4e8a3a 100%) !important;
-  transform: scale(1.05);
-}
-
 .logout-btn {
-  background: #3b82f6 !important;
+  background: #3b82f6;
   border-radius: 8px;
   padding: 6px 14px;
   color: white !important;
   text-decoration: none;
-  transition: all 0.3s ease;
 }
 
 .logout-btn:hover {
-  background: #3b82f6 !important;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: #2563eb;
 }
 
-/* Professional welcome message styling */
-.user-welcome {
-  color: #334155 !important;
-  font-weight: 500;
-  margin-right: 0.5rem;
-  background: #f1f5f9;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-}
-
-.welcome-banner {
+.hero {
   text-align: center;
-  background: #f8fafc;
-  border-left: 4px solid #3b82f6;
-  padding: 1.5rem;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 2rem;
   margin: 2rem auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
 }
 
-.welcome-banner h2 {
-  font-family: "Inter", sans-serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 0.25rem;
+.welcome-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 1.5rem 0;
 }
 
-.welcome-banner p {
-  font-size: 0.9rem;
-  color: #64748b;
-  margin-bottom: 0;
-}
-
-.welcome-banner {
+.welcome-message {
   text-align: center;
-  background: #f8fafc;
-  border-left: 4px solid #3b82f6;
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin: 2rem auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+}
+
+.welcome-message h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  color: white;
+  margin: 0.5rem 0;
 }
 
 .gator-logo {
   width: 60px;
   height: auto;
   border-radius: 50%;
-  background: #f1f5f9;
-  padding: 8px;
+  margin-bottom: 0.5rem;
+  background: white;
+  padding: 5px;
 }
 
-.welcome-banner h2 {
-  font-family: "Inter", sans-serif;
-  font-size: 1.3rem;
+.btn {
+  background: white;
+  color: #667eea;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-block;
   font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 0;
 }
 
-.welcome-banner p {
-  font-size: 0.9rem;
-  color: #64748b;
-  margin-bottom: 0;
+.btn:hover {
+  background: #f8fafc;
+  transform: scale(1.02);
 }
 
 .cart-buttons {
@@ -637,23 +337,41 @@ footer p {
 .cart-total {
   text-align: right;
   margin-top: 1.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
   padding: 1rem 0;
   border-top: 1px solid #e2e8f0;
 }
 
-.btn {
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-secondary {
   background: #64748b;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 24px;
   border-radius: 8px;
   text-decoration: none;
   display: inline-block;
   transition: all 0.2s;
 }
 
-.btn:hover {
+.btn-secondary:hover {
   background: #475569;
   transform: translateY(-2px);
 }
@@ -661,7 +379,7 @@ footer p {
 .btn-primary {
   background: #3b82f6;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 24px;
   border-radius: 8px;
   text-decoration: none;
   display: inline-block;
@@ -681,284 +399,25 @@ footer p {
   gap: 1rem;
 }
 
-.cart-buttons .btn,
-.cart-buttons .btn-primary {
-  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+.cart-total {
+  text-align: right;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.cart-buttons .btn:hover,
-.cart-buttons .btn-primary:hover {
-  background: linear-gradient(135deg, #7a4fb0 0%, #4e8a3a 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.cart-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
-}
-
-.cart-buttons .btn,
-.cart-buttons .btn-primary {
-  background: white;
-  color: #334155;
-  padding: 10px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.cart-buttons .btn:hover,
-.cart-buttons .btn-primary:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  transform: translateY(-1px);
-}
-
-.cart-total {
-  text-align: right;
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1e293b;
   padding: 1rem 0;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.cart-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
-}
-
-.cart-buttons .btn,
-.cart-buttons .btn-primary {
-  background: white;
-  color: #334155;
-  padding: 10px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: none;
-}
-
-.cart-buttons .btn:hover,
-.cart-buttons .btn-primary:hover {
-  background: white;
-  border-color: #e2e8f0;
-  transform: none;
-}
-
-.cart-total {
-  text-align: right;
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1e293b;
-  padding: 1rem 0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.cart-buttons .btn,
-.cart-buttons .btn-primary,
-.cart-buttons .btn:link,
-.cart-buttons .btn:visited,
-.cart-buttons .btn-primary:link,
-.cart-buttons .btn-primary:visited {
-  background: white !important;
-  color: #334155 !important;
-  border: 1px solid #e2e8f0 !important;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.cart-buttons .btn:hover,
-.cart-buttons .btn-primary:hover,
-.cart-buttons .btn:focus,
-.cart-buttons .btn-primary:focus,
-.cart-buttons .btn:active,
-.cart-buttons .btn-primary:active {
-  background: white !important;
-  color: #334155 !important;
-  border: 1px solid #e2e8f0 !important;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.hero {
+.empty-cart {
   text-align: center;
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 3rem;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  margin-bottom: 1rem;
-}
-
-.welcome-banner {
-  text-align: center;
-  background: #f8fafc;
   border-radius: 16px;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.gator-logo {
-  width: 60px;
-  height: auto;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-}
-
-.btn-secondary {
-  background: #3b82f6;
+.empty-cart p {
+  font-size: 1.2rem;
   color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 0.5rem;
-}
-
-.hero {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 800px;
-}
-
-.welcome-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.3);
-  margin: 1.5rem 0;
-}
-
-.welcome-message {
-  text-align: center;
-}
-
-.welcome-message h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
-  color: white;
-  margin: 0.5rem 0;
-}
-
-.welcome-message p {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0;
-}
-
-.gator-logo {
-  width: 60px;
-  height: auto;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-  background: white;
-  padding: 5px;
-}
-
-.btn-secondary {
-  background: white;
-  color: #667eea;
-  padding: 10px 24px;
-  border-radius: 30px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-weight: 600;
-}
-
-.btn-secondary:hover {
-  background: #f8fafc;
-  transform: scale(1.02);
-}
-
-.hero {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 2.5rem;
-  margin: 2rem auto;
-  max-width: 700px;
-}
-
-.welcome-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 1.5rem 0;
-}
-
-.welcome-message {
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-.welcome-message h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
-  color: white;
-  margin: 0.5rem 0;
-}
-
-.welcome-message p {
-  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.5rem;
-  font-size: 1rem;
-}
-
-.welcome-message .btn {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 10px 24px;
-}
-
-.gator-logo {
-  width: 60px;
-  height: auto;
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  background: white;
-  padding: 5px;
-}
-
-.welcome-message .btn {
-  background: white;
-  color: #667eea;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.welcome-message .btn:hover {
-  background: #f8fafc;
-  transform: scale(1.02);
 }
