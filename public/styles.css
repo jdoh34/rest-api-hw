@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap");
 
-/* 
-   Mixing Playfair Display for headings (fancy!) and Inter for everything else.
-*/
-
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +12,6 @@ html, body {
 
 body {
   font-family: "Inter", sans-serif;
-  /* This purple-green gradient?  Took a few tries but it grew on me. */
   background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
   color: #1e293b;
   line-height: 1.5;
@@ -25,7 +20,6 @@ body {
   flex-direction: column;
 }
 
-/* Navigation - kept it simple, no overcomplicating things */
 nav {
   background: white;
   border-bottom: 1px solid #e2e8f0;
@@ -82,7 +76,6 @@ nav {
   color: #3b82f6;
 }
 
-/* Had to make the signup button stand out, so it gets a blue background */
 .signup-btn {
   background: #3b82f6;
   border-radius: 8px !important;
@@ -94,7 +87,6 @@ nav {
   background: #2563eb !important;
 }
 
-/* Container - keeps everything centered and readable */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -102,7 +94,6 @@ nav {
   flex: 1;
 }
 
-/* The main heading needed to be visible against the gradient, so white text with shadow */
 h1 {
   font-family: "Playfair Display", serif;
   font-size: 3rem;
@@ -113,22 +104,6 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-h1 span {
-  color: #ffeb3c;
-  font-style: italic;
-}
-
-.hero-subtitle {
-  font-family: "Playfair Display", serif;
-  font-size: 1.2rem;
-  font-style: italic;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Products section - using grid because flex was acting weird on some screen sizes */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -136,7 +111,6 @@ h1 span {
   margin-top: 2rem;
 }
 
-/* Each product gets a white card. Clean, simple, doesn't distract */
 .product-card {
   background: white;
   border-radius: 16px;
@@ -168,7 +142,6 @@ h1 span {
   text-align: left;
 }
 
-/* Price tag - bottom right corner, looks like a little badge */
 .price-bubble {
   position: absolute;
   bottom: 16px;
@@ -194,11 +167,6 @@ h1 span {
   margin-top: 0.5rem;
 }
 
-.view-details:hover {
-  background: #e2e8f0;
-}
-
-/* Add to cart button - still needs backend work, but the styling is ready */
 .add-to-cart {
   background: #3b82f6;
   color: white;
@@ -209,14 +177,8 @@ h1 span {
   font-weight: 500;
   cursor: pointer;
   margin-left: 0.5rem;
-  transition: all 0.2s;
 }
 
-.add-to-cart:hover {
-  background: #2563eb;
-}
-
-/* Cart page table - nothing fancy, just gets the job done */
 .cart-table {
   width: 100%;
   background: white;
@@ -225,8 +187,7 @@ h1 span {
   border-collapse: collapse;
 }
 
-.cart-table th,
-.cart-table td {
+.cart-table th, .cart-table td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
@@ -235,13 +196,6 @@ h1 span {
 .cart-table th {
   background: #f8fafc;
   font-weight: 600;
-}
-
-.cart-total {
-  text-align: right;
-  margin-top: 1.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
 }
 
 .remove-btn {
@@ -254,11 +208,6 @@ h1 span {
   font-size: 0.75rem;
 }
 
-.remove-btn:hover {
-  background: #dc2626;
-}
-
-/* Footer - translucent so the gradient shows through */
 footer {
   text-align: center;
   padding: 2rem;
@@ -268,12 +217,6 @@ footer {
   background: rgba(0, 0, 0, 0.1);
 }
 
-footer p {
-  color: #ffffff;
-  text-align: center;
-}
-
-/* Discount banner - dark background, pops out but not too much */
 .discount-banner {
   background: #0f172a;
   color: white;
@@ -282,104 +225,6 @@ footer p {
   font-size: 0.875rem;
 }
 
-.discount-banner a {
-  color: #ffeb3b;
-  margin-left: 8px;
-  text-decoration: none;
-}
-
-.discount-banner span {
-  background: #3b82f6;
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-
-/* Forms - kept them contained and easy to use */
-.form-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-container h2 {
-  font-family: "Playfair Display", serif;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #3b82f6;
-}
-
-.btn-primary {
-  width: 100%;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background: #2563eb;
-}
-
-/* Making sure it doesn't look broken on phones */
-@media (max-width: 768px) {
-  .nav-container {
-    flex-direction: column;
-  }
-  
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .cart-table {
-    font-size: 0.875rem;
-  }
-  
-  .cart-table th,
-  .cart-table td {
-    padding: 0.5rem;
-  }
-}
-/* Signup form - soft rounded bubbles */
 .signup-form {
   max-width: 500px;
   margin: 2rem auto;
@@ -389,8 +234,7 @@ footer p {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.signup-form input,
-.signup-form select {
+.signup-form input, .signup-form select {
   width: 100%;
   padding: 14px 16px;
   margin: 10px 0;
@@ -398,15 +242,6 @@ footer p {
   border-radius: 60px;
   font-size: 1rem;
   background: #f9fafb;
-  transition: all 0.2s;
-}
-
-.signup-form input:focus,
-.signup-form select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .signup-form button {
@@ -420,26 +255,169 @@ footer p {
   font-weight: 600;
   cursor: pointer;
   margin-top: 16px;
+}
+
+.user-welcome {
+  color: #3b82f6;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.logout-btn {
+  background: #3b82f6;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: white !important;
+  text-decoration: none;
+}
+
+.logout-btn:hover {
+  background: #2563eb;
+}
+
+.hero {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 700px;
+}
+
+.welcome-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 1.5rem 0;
+}
+
+.welcome-message {
+  text-align: center;
+}
+
+.welcome-message h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  color: white;
+  margin: 0.5rem 0;
+}
+
+.gator-logo {
+  width: 60px;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+  background: white;
+  padding: 5px;
+}
+
+.btn {
+  background: white;
+  color: #667eea;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background: #f8fafc;
+  transform: scale(1.02);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+  padding: 1rem 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-secondary {
+  background: #64748b;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
   transition: all 0.2s;
 }
 
-.signup-form button:hover {
+.btn-secondary:hover {
+  background: #475569;
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
-.already {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #ffffff;
-}
-
-.already a {
-  color: #ffeb3b;
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: 500;
+  display: inline-block;
+  transition: all 0.2s;
 }
 
-.already a:hover {
-  text-decoration: underline;
+.btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.empty-cart p {
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 1.5rem;
 }

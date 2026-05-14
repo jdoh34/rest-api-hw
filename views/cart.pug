@@ -5,27 +5,14 @@ block title
 
 block content
   h1 Shopping Cart
-
-  if confirmed && lastOrder
-    div(style="max-width:700px;margin:0 auto;background:white;border-radius:16px;padding:2.5rem;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);")
-      div(style="font-size:4rem;margin-bottom:1rem;") ✅
-      h2(style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.5rem;") Order Confirmed!
-      p(style="color:#475569;margin-bottom:2rem;") Thanks for your order. We'll get started right away!
-      table(style="width:100%;border-collapse:collapse;text-align:left;margin-bottom:1.5rem;")
-        thead
-          tr
-            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Item
-            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Qty
-            th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Subtotal
-        tbody
-          each item in lastOrder
-            tr
-              td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.name
-              td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.quantity
-              td(style="padding:8px;border-bottom:1px solid #f1f5f9;") $#{(item.price * item.quantity).toFixed(2)}
-      a(href="/products", style="background:#3b82f6;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;") Browse More Services →
-
-  else if cartItems && cartItems.length > 0
+  
+  if cartItems && cartItems.length
+    if user
+      .discount-code
+        span 🎉 WELCOME DISCOUNT 🎉
+        .code GATOR-#{Math.floor(Math.random() * 90000) + 10000}
+        p Use this code at checkout for 20% OFF your first order!
+    
     table.cart-table
       thead
         tr
@@ -53,6 +40,6 @@ block content
       form(action="/checkout", method="GET", style="margin:0;display:flex;")
         button(type="submit", style="background:#22c55e;color:white;padding:10px 24px;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;") Proceed to Checkout →
   else
-    div(style="background:white;border-radius:16px;padding:3rem;text-align:center;")
-      p(style="font-size:1.2rem;margin-bottom:1.5rem;color:#475569;") Your cart is empty!
-      a(href="/products", style="background:#3b82f6;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;") Browse Services →
+    .empty-cart
+      p Your cart is empty.
+      a.btn-primary(href="/products") Browse Services →

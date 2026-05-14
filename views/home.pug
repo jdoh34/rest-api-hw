@@ -1,7 +1,18 @@
 extends layout
 
 block content
-  h1 Assignments? 
-    span Consider them handled.
-  p Less stress. More A's.
-  a.floating-btn(href="/products") Browse Our Services →
+  .hero
+    h1 Assignments? 
+      span Consider them handled.
+    
+    .welcome-divider
+    
+    .welcome-message
+      if user
+        img.gator-logo(src="/images/logo.png", alt="Gator Logo")
+        h2 Welcome back, #{user.username}!
+        p Ready to crush your assignments? We've got your back.
+        a.btn(href="/products") Browse Our Services →
+      else
+        p Sign up to get 15% off your first order!
+        a.btn-secondary(href="/signup") Sign Up Now
