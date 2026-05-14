@@ -17,8 +17,14 @@ html
           a(href="/") Home
           a(href="/products") Products
           a(href="/cart") Cart
-          a(href="/login") Login
-          a.signup-btn(href="/signup") ✨ Sign Up ✨
+
+          if user
+            a(href="/profile") Hi, #{user.name}
+            form(action="/logout", method="POST", style="display:inline;")
+              button(type="submit", style="background:none;border:none;color:#475569;font-weight:500;cursor:pointer;font-family:inherit;font-size:1rem;") Logout
+          else
+            a(href="/login") Login
+            a.signup-btn(href="/signup") ✨ Sign Up ✨
 
     .discount-banner
       span 🎓 STUDENT DEAL 🎓

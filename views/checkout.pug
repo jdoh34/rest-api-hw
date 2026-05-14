@@ -1,0 +1,31 @@
+extends layout
+
+block title
+  | Confirm Checkout
+
+block content
+  h1 Confirm Checkout
+
+  div(style="max-width:700px;margin:0 auto;background:white;border-radius:16px;padding:2.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.1);")
+    h2(style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1rem;text-align:center;") Please Review Your Order
+
+    table(style="width:100%;border-collapse:collapse;text-align:left;margin-bottom:1.5rem;")
+      thead
+        tr
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Item
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Qty
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Subtotal
+      tbody
+        each item in cartItems
+          tr
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.name
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;")= item.quantity
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;") $#{(item.price * item.quantity).toFixed(2)}
+
+    p(style="text-align:right;font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;") Total: $#{total}
+
+    div(style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;")
+      a(href="/cart", style="background:#f1f5f9;color:#1e293b;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:500;") ← Back to Cart
+
+      form(action="/checkout/confirm", method="POST", style="margin:0;")
+        button(type="submit", style="background:#22c55e;color:white;padding:10px 24px;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;") Confirm Purchase

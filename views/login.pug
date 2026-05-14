@@ -6,6 +6,8 @@ block title
 block content
   .form-container
     h2 Login
+      if error
+        p(style="color:red;text-align:center;") #{error}
 
     form(action="/login", method="POST")
       .form-group

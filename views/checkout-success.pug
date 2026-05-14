@@ -1,0 +1,45 @@
+extends layout
+
+block title
+  | Order Confirmed
+
+block content
+  h1 Order Confirmed
+
+  div(style="max-width:700px;margin:0 auto;background:white;border-radius:16px;padding:2.5rem;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);")
+
+    div(style="font-size:4rem;margin-bottom:1rem;")
+
+    h2(style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.5rem;")
+      | Thank You For Your Purchase!
+
+    p(style="color:#475569;margin-bottom:2rem;")
+      | Your assignment request has been successfully submitted.
+
+    table(style="width:100%;border-collapse:collapse;text-align:left;margin-bottom:1.5rem;")
+      thead
+        tr
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Item
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Qty
+          th(style="padding:8px;border-bottom:2px solid #e2e8f0;") Subtotal
+
+      tbody
+        each item in orderItems
+          tr
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;")
+              = item.name
+
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;")
+              = item.quantity
+
+            td(style="padding:8px;border-bottom:1px solid #f1f5f9;")
+              | $#{(item.price * item.quantity).toFixed(2)}
+
+    p(style="text-align:right;font-size:1.25rem;font-weight:700;margin-bottom:2rem;")
+      | Total Paid: $#{total}
+
+    a(
+      href="/products",
+      style="background:#3b82f6;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;"
+    )
+      | Browse More Services →

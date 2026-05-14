@@ -20,6 +20,11 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -81,23 +86,85 @@ app.get('/products/:identifier', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('login', { title: 'Login' });
+  res.render('login', { title: 'Login', error: null });
 });
 
 app.post('/login', (req, res) => {
-  res.redirect('/');
+  const { email, password } = req.body;
+
+  db.get(
+    'SELECT * FROM users WHERE email = ? AND password = ?',
+    [email, password],
+    (err, user) => {
+      if (err) return res.status(500).send('Database error');
+
+      if (!user) {
+        return res.status(401).render('login', {
+          title: 'Login',
+          error: 'Invalid email or password.'
+        });
+      }
+
+      req.session.user = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        year: user.year
+      };
+
+      res.redirect('/profile');
+    }
+  );
 });
 
 app.get('/signup', (req, res) => {
-  res.render('signup', { title: 'Sign Up' });
+  res.render('signup', { title: 'Sign Up', error: null });
 });
 
 app.post('/signup', (req, res) => {
-  res.redirect('/products?discount=applied');
+  const { name, email, year, password } = req.body;
+
+  db.run(
+    'INSERT INTO users (name, email, year, password) VALUES (?, ?, ?, ?)',
+    [name, email, year, password],
+    function (err) {
+      if (err) {
+        if (err.message.includes('UNIQUE')) {
+          return res.status(409).render('signup', {
+            title: 'Sign Up',
+            error: 'That email is already registered.'
+          });
+        }
+        return res.status(500).send('Database error');
+      }
+
+      req.session.user = {
+        id: this.lastID,
+        name,
+        email,
+        year
+      };
+
+      res.redirect('/profile');
+    }
+  );
 });
 
 app.get('/profile', (req, res) => {
-  res.render('profile', { title: 'My Profile' });
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  res.render('profile', {
+    title: 'My Profile',
+    user: req.session.user
+  });
+});
+
+app.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 });
 
 // ===== CART =====
@@ -149,13 +216,52 @@ app.post('/cart/remove', (req, res) => {
   res.redirect('/cart');
 });
 
-app.post('/cart/checkout', (req, res) => {
+app.get('/checkout', (req, res) => {
   const cart = getCart(req);
+
+  if (cart.length === 0) {
+    return res.redirect('/cart');
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  res.render('checkout', {
+    title: 'Confirm Checkout',
+    cartItems: cart,
+    total: total.toFixed(2)
+  });
+});
+
+app.post('/checkout/confirm', (req, res) => {
+  const cart = getCart(req);
+
+  if (cart.length === 0) {
+    return res.redirect('/cart');
+  }
 
   req.session.lastOrder = [...cart];
   req.session.cart = [];
 
-  res.redirect('/cart?confirmed=true');
+  res.redirect('/checkout/success');
+});
+
+app.get('/checkout/success', (req, res) => {
+  const lastOrder = req.session.lastOrder || [];
+
+  if (lastOrder.length === 0) {
+    return res.redirect('/products');
+  }
+
+  const total = lastOrder.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  res.render('checkout-success', {
+    title: 'Order Confirmed',
+    orderItems: lastOrder,
+    total: total.toFixed(2)
+  });
 });
 
 // ===== API =====

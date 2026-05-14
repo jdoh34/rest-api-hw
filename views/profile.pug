@@ -6,21 +6,18 @@ block title
 block content
   h1 User Profile
 
-  .profile
+  .form-container
     p
       strong Name:
-      |  Jane Doe
+      |  #{user.name}
 
     p
       strong Email:
-      |  janedoe@example.com
+      |  #{user.email}
 
     p
-      strong Member Since:
-      |  January 2026
+      strong Year:
+      |  #{user.year}
 
-    p
-      strong Favorite Subject:
-      |  Math
-
-    p This is a mock profile page. User account functionality will be implemented in a future phase.
+    form(action="/logout", method="POST")
+      button.btn-primary(type="submit") Log Out

@@ -1,11 +1,14 @@
 const sqlite3 = require('sqlite3').verbose();
-
-const db = new sqlite3.Database("homework.db", (err) => {
+const path = require('path');
+const db = new sqlite3.Database(
+  path.join(__dirname, '..', 'homework.db'),
+  (err) => {
     if (err) {
-        return console.error("Error opening database:", err.message);
+      return console.error("Error opening database:", err.message);
     }
     console.log("Connected to the homework database.");
-});
+  }
+);
 
 function db_setup() {
 
