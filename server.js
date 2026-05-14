@@ -53,17 +53,17 @@ function getProductByName(name, callback) {
 // ===== ROUTES =====
 
 app.get('/', (req, res) => {
-  res.render('home', { title: 'Home', user: req.session.user });
+  res.render('home', { title: 'Home' });
 });
 
 app.get('/home', (req, res) => {
-  res.render('home', { title: 'Home', user: req.session.user });
+  res.render('home', { title: 'Home' });
 });
 
 app.get('/products', (req, res) => {
   getAllProducts((err, products) => {
     if (err) return res.status(500).send('Database error');
-    res.render('products', { title: 'All Products', products, user: req.session.user });
+    res.render('products', { title: 'All Products', products });
   });
 });
 
@@ -80,8 +80,7 @@ app.get('/products/:identifier', (req, res) => {
 
     res.render('product-detail', {
       title: product.name,
-      product,
-      user: req.session.user
+      product
     });
   });
 });
@@ -175,7 +174,6 @@ app.get('/cart', (req, res) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   res.render('cart', {
-    user: req.session.user,
     title: 'Shopping Cart',
     cartItems: cart,
     total: total.toFixed(2)
@@ -357,31 +355,4 @@ app.delete('/api/homework/:title', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-});
-app.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-});
-
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  db.get('SELECT * FROM users WHERE username = ? AND password = ?',
-    [username, password], (err, user) => {
-    if (err || !user) {
-      return res.status(401).send('Invalid username or password');
-    }
-    req.session.user = user;
-    res.redirect('/');
-  });
-});
-
-app.post('/signup', (req, res) => {
-  const { name, email, password } = req.body;
-  db.run('INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-    [name, email, password], (err) => {
-    if (err) {
-      return res.status(400).send('Username or email already exists');
-    }
-    res.redirect('/login');
-  });
 });
