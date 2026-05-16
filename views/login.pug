@@ -4,18 +4,38 @@ block title
   | Login
 
 block content
-  .form-container
-    h2 Login
-      if error
-        p(style="color:red;text-align:center;") #{error}
+  .signup-form
+    h2(style="text-align: center; margin-bottom: 1.5rem;") Welcome Back
 
+    if error
+      p(style="color:red;text-align:center;margin-bottom:1rem;") #{error}
+    
     form(action="/login", method="POST")
-      input(type="text", name="username", placeholder="Username", required)
-      input(type="password", name="password", placeholder="Password", required)
+      input(
+        type="text",
+        name="username",
+        placeholder="Username",
+        required
+      )
+
+      input(
+        type="password",
+        name="password",
+        placeholder="Password",
+        required
+      )
+
       button(type="submit") Log In
     
     .login-links(style="text-align: center; margin-top: 1.5rem;")
       p(style="margin-bottom: 0.5rem;")
-        a(href="/forgot-password", style="color: #d4a574; text-decoration: none; font-size: 1rem;") Forgot Password?
+        a(
+          href="/forgot-password",
+          style="color: #d4a574; text-decoration: none; font-size: 1rem;"
+        ) Forgot Password?
+
       p
-        a(href="/signup", style="color: #d4a574; text-decoration: none; font-size: 1rem; font-weight: 500;") Sign up
+        a(
+          href="/signup",
+          style="color: #d4a574; text-decoration: none; font-size: 1rem; font-weight: 500;"
+        ) Sign up

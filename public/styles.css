@@ -421,3 +421,98 @@ footer {
   color: white;
   margin-bottom: 1.5rem;
 }
+
+/* LOGIN PAGE */
+
+.form-container {
+  max-width: 700px;
+  margin: 4rem auto;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: 40px;
+  padding: 3rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.form-container h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  border-radius: 999px;
+  border: 2px solid #dbe3ec;
+  background: #f8fafc;
+  font-size: 1.2rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-container input:focus {
+  border-color: #9263c5;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(146, 99, 197, 0.15);
+}
+
+.form-container button {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #9263c5d1 0%, #639f4f 100%);
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.form-container button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.login-links {
+  margin-top: 2rem;
+}
+
+.login-links a {
+  color: #d4a574 !important;
+  text-decoration: none;
+  font-size: 1.15rem !important;
+  transition: opacity 0.2s ease;
+}
+
+.login-links a:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    margin: 2rem 1rem;
+    padding: 2rem;
+    border-radius: 28px;
+  }
+
+  .form-container h2 {
+    font-size: 2.2rem;
+  }
+
+  .form-container input,
+  .form-container button {
+    font-size: 1rem;
+    padding: 1rem 1.2rem;
+  }
+}
